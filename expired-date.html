@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Countdown</title>
+    <style>
+        /* Gaya dasar untuk header */
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Gaya untuk kotak countdown */
+        .countdown-box {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        /* Gaya untuk teks countdown */
+        .countdown-text {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Website Countdown</h1>
+    </header>
+    <div class="countdown-box">
+        <p class="countdown-text">Website ini akan expired dalam:</p>
+        <div id="countdown"></div>
+    </div>
+    <script>
+        // Tanggal dan waktu target untuk kedaluwarsa (30 hari dari sekarang)
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 30); // Tambahkan 30 hari
+        targetDate.setHours(0, 0, 0, 0); // Set jam 00:00:00
+
+        // Update countdown setiap detik
+        const countdownElement = document.getElementById("countdown");
+
+        const updateCountdown = () => {
+            const currentDate = new Date();
+            const timeDifference = targetDate - currentDate;
+
+            if (timeDifference <= 0) {
+                // Jika waktu target sudah tercapai, tampilkan pesan expired
+                countdownElement.innerHTML = "Website ini telah expired.";
+            } else {
+                // Hitung sisa waktu dalam hari, jam, menit, dan detik
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                // Tampilkan countdown
+                countdownElement.innerHTML = `${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
+            }
+        };
+
+        // Panggil fungsi updateCountdown setiap detik
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
